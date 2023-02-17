@@ -10,6 +10,10 @@ push %ebx
 
 ##VOTRE CODE ICI
 
+movl $0, %eax
+
 pop %ebx
 pop %ebp
 ret
+
+
