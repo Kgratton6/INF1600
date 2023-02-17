@@ -1,6 +1,6 @@
 .data
 strings:
-.asciz "Allo Hi"
+.asciz "Allo hi"
 num:
 .asciz "Allo"
 den:
@@ -18,6 +18,7 @@ mask:
 xor %eax, %eax          
 xor %ecx, %ecx
 xor %ebx, %ebx
+xor %edx, %edx            ## preparer le registre a la division
 
 setup:
 movl $strings, %esi     
@@ -46,13 +47,13 @@ lodsb
 
 d2:
 cmp $0,%al
-jz r
+je r
 cmp $0x41, %al
-jb n_c2
+jb r
 cmp $0x5A, %al
 jb a_2
 cmp $0x61, %al
-jb n_c2
+jb r
 cmp $0x7A, %al 
 jbe a_2
 
@@ -63,11 +64,9 @@ jmp n_c2
 r:
 movl %ecx, %eax
 
-divl %ebx
+idiv %ebx              ## Bon operateur de vision
 cmp $0x00, %eax
-jmp e_n
-je e_d              
-             
+je e_d                 ## bons sauts selon le resultat        
 
 e_n:
 push $num
@@ -82,6 +81,7 @@ call printf
 
 bye:
 popl %ebx
+movl %ebp, %esp      ## l'epilogue n'est pas complet
 popl %ebp
 ret
 
