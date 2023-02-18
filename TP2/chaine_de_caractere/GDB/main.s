@@ -80,9 +80,9 @@ call printf
 
 
 bye:
-popl %ebx
-movl %ebp, %esp      ## l'epilogue n'est pas complet
-popl %ebp
+pop %ebx
+mov %ebp, %esp      ## l'epilogue n'est pas complet
+pop %ebp
 ret
 
 
