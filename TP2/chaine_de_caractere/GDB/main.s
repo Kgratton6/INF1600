@@ -32,7 +32,7 @@ je n_c2
 cmp $0x41, %al
 jb n_c2
 cmp $0x5A, %al
-jb a
+jbe a                   ## changer pour reconnaitre le 'Z'
 cmp $0x61, %al
 jb n_c2
 cmp $0x7A, %al 
@@ -51,7 +51,7 @@ je r
 cmp $0x41, %al
 jb r
 cmp $0x5A, %al
-jb a_2
+jbe a_2
 cmp $0x61, %al
 jb r
 cmp $0x7A, %al 
@@ -64,24 +64,27 @@ jmp n_c2
 r:
 movl %ecx, %eax
 
-idiv %ebx              ## Bon operateur de vision
+divl %ebx          
 cmp $0x00, %eax
 je e_d                 ## bons sauts selon le resultat        
 
 e_n:
 push $num
 call printf
+addl $4, %esp
  
 jmp bye
 
 e_d:
 push $den
 call printf
+addl $4, %esp
+
 
 
 bye:
 pop %ebx
-mov %ebp, %esp      ## l'epilogue n'est pas complet
+mov %ebp, %esp       ## l'epilogue n'est pas complet
 pop %ebp
 ret
 
