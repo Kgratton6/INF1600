@@ -29,18 +29,18 @@ loop:
 flds factorial          # st[0] = factorial
 flds i                  # st[0] = i                            st[1] = factorial
 fmulp                   # st[0] = factorial * i                st[1] = libre
-flds one                # st[0] = 1                            st[1] = old_factoral * i
-fdivp                   # st[0] = 1 / ( old_factoral * 1 )     st[1] = libre    (somme partielle) = 1 / ( old_factoral * 1 )
+flds one                # st[0] = 1                            st[1] = factorial * i
+fdivp                   # st[0] = 1 / ( factorial * i )        st[1] = libre    (somme partielle) = 1 / ( factorial * i )
 flds e                  # st[0] = e                            st[1] = (somme partielle)
 faddp                   # st[0] = e + (somme partielle)        st[1] = libre
 fstps e                 # e reviens en memoire  st[0] = libre, st[1] = libre
 
-flds factorial          # st[0] = factorial               # changer la valeur de factorial pour le prochain
+flds factorial          # st[0] = factorial               # changer la valeur de factorial pour le prochain (ancien factoriel * i)
 flds i                  # st[0] = i                            st[1] = factorial
 fmulp                   # st[0] = factorial * i                st[1] = libre
 fstps factorial         # factorial reviens     st[0] = libre  st[1] = libre
 
-flds i                  # st[0] = i
+flds i                  # st[0] = i                       # changer la valeur de i pour la prochaine ( i = i+1 )
 flds one                # st[0] = 1                            st[1] = i
 faddp                   # st[0] = i + 1                        st[1]= libre
 fstps i                 # nouveau i reviens     st[0] = libre, st[1] = libre
@@ -53,5 +53,6 @@ end:
 flds e                  # st[0] = e pour le retour de la fonction
 
 pop %ebx                # epilogue
+mov %ebp, %esp
 pop %ebp
 ret
