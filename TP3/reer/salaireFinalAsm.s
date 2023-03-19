@@ -7,17 +7,18 @@ pushl %ebp
 movl %esp, %ebp
 pushl %ebx
 # DEBUT COMPLETION
-
-movl 16(%ebp), %eax     #eax = salaire depart
-movl 20(%ebp), %ebx     #ebx = augmentation salariale
-movl 32(%ebp), %ecx     #ecx = Anne avant retrait
-movl $100, %edx         #edx = 100
-
-subl $1, %ecx
-
-
-
-
+pushl %eax
+movl 16(%ebp), %ebx     # ebx = salaire depart
+movl 20(%ebp), %ecx     # ecx = augmentation salariale
+movl 28(%ebp), %edx     # edx = annees avant retraite
+movl $100, %esi         # esi = 100
+exposant:
+movl %ecx, %eax                 
+idivl %esi             
+addl $1, %eax
+subl $1, %edx
+imul %ebx,%eax               
+loop exposant
 # FIN COMPLETION
 # NE RIEN MODIFIER APRES CETTE LIGNE
 retour:
