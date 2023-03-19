@@ -37,10 +37,8 @@ pushl %ecx
 pushl %edx
 pushl %eax
 
-movl %edx, %eax        # %ecx = T_[i]
-addl %eax, %ecx
-
-cmp %eax, %ecx         # T_[i] < pivot
+mov (%ecx, %edx, 4), %ecx  # %ecx = T_[i]
+cmp %eax, %ecx             # T_[i] < pivot
 
 popl %eax
 popl %edx
@@ -55,10 +53,8 @@ pushl %ecx
 pushl %edx
 pushl %eax
 
-movl %esi, %eax         # %ecx = T_[k]
-addl %eax, %ecx
-
-cmp %eax, %ecx          # T_[k] > pivot
+mov (%ecx, %esi, 4), %ecx  # %ecx = T_[k]
+cmp %ecx, %eax             # T_[k] > pivot
 
 popl %eax
 popl %edx
