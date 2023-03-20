@@ -12,13 +12,14 @@ movl 16(%ebp), %ebx     # ebx = salaire depart
 movl 20(%ebp), %ecx     # ecx = augmentation salariale
 movl 28(%ebp), %edx     # edx = annees avant retraite
 movl $100, %esi         # esi = 100
+movl %ecx, %eax                     
+idivl %esi              # eax = augmentation salariale/100
+addl $1, %eax           # eax = augmentation salariale/100 + 1
+subl $1, %edx           # edx = annees avant retraite-1
 exposant:
-movl %ecx, %eax                 
-idivl %esi             
-addl $1, %eax
-subl $1, %edx
-imul %ebx,%eax               
+imul %edx, %eax         # eax = parentheses exposant annees avant retraite-1      
 loop exposant
+imul %ebx, %eax         # eax = salaire final
 # FIN COMPLETION
 # NE RIEN MODIFIER APRES CETTE LIGNE
 retour:
